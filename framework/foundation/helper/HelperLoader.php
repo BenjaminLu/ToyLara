@@ -18,6 +18,6 @@ class HelperLoader
 
     public function loadViewFunctions()
     {
-        require 'function/views.function.php';
+        require 'function/response.helper.php';
     }
 }

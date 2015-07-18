@@ -8,6 +8,7 @@
 
 namespace Foundation\Component;
 
+use Spatie\ArrayToXml\ArrayToXml;
 
 class Response
 {
@@ -15,6 +16,12 @@ class Response
     protected $content = null;
     protected $viewParameter = array();
     protected $statusCode = 404;
+    protected $isHtml = true;
+
+    public function setIsHtml($boolean)
+    {
+        $this->isHtml = $boolean;
+    }
 
     public function addHeader($value)
     {
@@ -70,13 +77,32 @@ class Response
         }
 
         if ($this->content) {
-            require $this->content;
+            if ($this->isHtml) {
+                require $this->content;
+            } else {
+                echo $this->content;
+            }
         }
     }
 
     public function with($key, $value)
     {
         $this->viewParameter[$key] = $value;
+        return $this;
+    }
+
+    public function json($array)
+    {
+        $this->addHeader('Content-Type: application/json; charset=utf-8');
+        $this->content = json_encode($array);
+        return $this;
+    }
+
+    public function xml($array)
+    {
+        $this->addHeader('Content-Type: application/xml; charset=utf-8');
+        $xml = ArrayToXml::convert($array, 'root');
+        $this->content = $xml;
         return $this;
     }
 }

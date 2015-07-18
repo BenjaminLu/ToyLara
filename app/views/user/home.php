@@ -5,9 +5,6 @@
     <title>Document</title>
 </head>
 <body>
-<div>
-    <img src="{{url('/img/banner.jpg')}}" alt="banner"/>
-</div>
 <ul>
     <?php foreach ($params as $key => $value) { ?>
         <li>{{$key}}</li>

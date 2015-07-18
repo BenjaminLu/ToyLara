@@ -57,3 +57,11 @@ function url($url)
     $completeURL = "http://" . $domain . $url;
     return $completeURL;
 }
+
+function response()
+{
+    $response = new Response();
+    $response->setIsHtml(false);
+    $response->setStatusCode(200);
+    return $response;
+}

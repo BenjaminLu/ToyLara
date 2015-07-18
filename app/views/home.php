@@ -6,8 +6,7 @@
 </head>
 <body>
 <div class="message">
-    Hello, Home
-    {{$hi}} {{$cool}}
+    Hello! {{$name}},  welcome home.
 </div>
 </body>
 </html>
