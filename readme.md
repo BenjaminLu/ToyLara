@@ -74,3 +74,44 @@ Log::error('message');
 ```php
 <img src="{{url('/img/banner.jpg')}}" alt="banner"/>
 ```
+
+## Returning Other Format
+```php
+namespace Controllers;
+
+use Foundation\Component\Request;
+
+class HomeController extends Controller
+{
+    public function showXml(Request $request)
+    {
+        $array = [
+            'Good guy' => [
+                'name' => 'Luke Skywalker',
+                'weapon' => 'Lightsaber'
+            ],
+            'Bad guy' => [
+                'name' => 'Sauron',
+                'weapon' => 'Evil Eye'
+            ]
+        ];
+        return response()->xml($array);
+    }
+
+    public function showJson()
+    {
+        $data = array(
+            'para1' => 'data1',
+            'para2' => 'data2',
+            'para3' => 'data3',
+            'para4' => 'data4',
+            'para5' => array(
+                'innerPara' => array(
+                    '1', '2', '3'
+                )
+            ),
+        );
+        return response()->json($data);
+    }
+}
+```
