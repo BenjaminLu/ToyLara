@@ -9,14 +9,23 @@
 namespace Controllers;
 
 
+use Foundation\Component\Request;
+
 class UserController extends Controller {
     public function index()
     {
         return view('user.home');
     }
 
-    public function show($parameter)
+    public function show(Request $request)
     {
-        return view('user.home')->with('id' , $parameter['id']);
+        $params = $request->getParameters();
+        return view('user.home')->with('params' , $params);
+    }
+
+    public function store(Request $request)
+    {
+        $postParameters = $request->postParameters();
+        return view('user.home')->with('params', $postParameters);
     }
 }

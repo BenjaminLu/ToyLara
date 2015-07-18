@@ -13,9 +13,8 @@ function view($viewFile)
     $response = new Response();
     $viewPath = str_replace('.', '/', $viewFile);
     //exec php code in view;
-    ob_start();
-    require VIEW_DIR . $viewPath . '.php';
-    $unprocessedView = ob_get_clean();
+
+    $unprocessedView = file_get_contents(VIEW_DIR . $viewPath . '.php');
     //replace {{$i}} to php echo function
 
     $pattern = array("{{", "}}");

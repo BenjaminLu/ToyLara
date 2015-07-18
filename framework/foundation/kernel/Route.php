@@ -10,14 +10,25 @@ namespace Kernel;
 
 
 class Route {
-    private static $rules = array();
-    public static function get($pattern = '', $controllerAndAction = '')
+    private static $getRules = array();
+    private static $postRules = array();
+    public static function get($pattern, $controllerAndAction)
     {
-        static::$rules[$pattern] = $controllerAndAction;
+        static::$getRules[$pattern] = $controllerAndAction;
     }
 
-    public static function rules()
+    public static function post($pattern, $controllerAndAction)
     {
-        return static::$rules;
+        static::$postRules[$pattern] = $controllerAndAction;
+    }
+
+    public static function getRules()
+    {
+        return static::$getRules;
+    }
+
+    public static function postRules()
+    {
+        return static::$postRules;
     }
 }

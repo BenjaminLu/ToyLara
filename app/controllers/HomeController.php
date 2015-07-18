@@ -8,10 +8,12 @@
 
 namespace Controllers;
 
+use Foundation\Component\Request;
+
 class HomeController extends Controller {
 
-    public function index()
+    public function index(Request $request)
     {
-        return view('home')->with('hi', 'hi message')->with('cool', 'himessage');
+        return view('home')->with('hi', 'hi message')->with('cool', 'cool message');
     }
 }

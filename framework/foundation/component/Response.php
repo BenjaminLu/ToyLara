@@ -34,12 +34,11 @@ class Response
 
     public function sendContent()
     {
-        $flashGlobalsVariable = array();
         foreach($this->viewParameter as $key => $value) {
             global $$key;
             $$key = $value;
-            $flashGlobalsVariable[$key] = $value;
         }
+
         require $this->content;
     }
 

@@ -9,4 +9,4 @@ use Kernel\Route;
 
 Route::get('/', 'HomeController@index');
 Route::get('/user/{id}', 'UserController@show');
-
+Route::post('/user/{id}', 'UserController@store');

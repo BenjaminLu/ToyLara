@@ -11,9 +11,34 @@ namespace Foundation\Component;
 
 class Request
 {
+    const TYPE_GET = 0;
+    const TYPE_POST = 1;
+    protected $type = Request::TYPE_GET;
     protected $baseUrl;
     protected $uri;
-    protected $parameters;
+    protected $getParametersArray = array();
+    protected $postParametersArray = array();
+
+    public function __construct()
+    {
+        foreach($_POST as $key => $value) {
+            $this->postParametersArray[$key] = $value;
+        }
+
+        foreach($_GET as $key => $value) {
+            $this->getParametersArray[$key] = $value;
+        }
+    }
+
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
 
     public function setBaseUrl($url)
     {
@@ -21,24 +46,38 @@ class Request
         return $this;
     }
 
-    public function setParameters($params)
+    public function setGetParameter($key, $value)
     {
-        $this->parameters = $params;
+        $this->getParametersArray[$key] = $value;
+        return $this;
+    }
+
+    public function setPostParameter($key, $value)
+    {
+        $this->postParametersArray[$key] = $value;
         return $this;
     }
 
     public function getParameters()
     {
-        if ($this->parameters == null) {
-            $this->parameters = array();
+        if ($this->getParametersArray == null) {
+            $this->getParametersArray = array();
         }
-        return $this->parameters;
+        return $this->getParametersArray;
     }
 
-    public function getParam($name, $default = null)
+    public function postParameters()
     {
-        if (isset($this->parameters[$name])) {
-            return $this->parameters[$name];
+        if ($this->postParametersArray == null) {
+            $this->postParametersArray = array();
+        }
+        return $this->postParametersArray;
+    }
+
+    public function getParameter($name, $default = null)
+    {
+        if (isset($this->getParametersArray[$name])) {
+            return $this->getParametersArray[$name];
         }
         return $default;
     }
@@ -51,6 +90,10 @@ class Request
 
         $uri = $_SERVER['REQUEST_URI'];
         $uri = trim(str_replace($this->baseUrl, '', $uri), '/');
+        $hasTraditionalURLParametersIndex = strpos( $uri, '?');
+        if($hasTraditionalURLParametersIndex) {
+            $uri = substr($uri, 0, $hasTraditionalURLParametersIndex);
+        }
 
         return $uri;
     }
