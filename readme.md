@@ -6,7 +6,7 @@ Route::get('/user/{id}', 'UserController@show');
 Route::post('/user/{id}', 'UserController@store');
 ```
 
-## Laravel Flavored Controller and Helper Functions
+## Laravel Flavored Controller
 ```php
 namespace Controllers;
 
@@ -30,6 +30,16 @@ class UserController extends Controller
         $postParameters = $request->postParameters();
         return view('user.home')->with('params', $postParameters);
     }
+    
+    public function redirectAnyway()
+    {
+        return redirect('/user/7');
+    }
+    
+    public function errorAnyway()
+    {
+        return abort(401);
+    }
 }
 ```
 
@@ -50,4 +60,17 @@ class UserController extends Controller
 </ul>
 </body>
 </html>
+```
+
+## Logging
+message will be written in `/app/log/datetime.txt`
+```php
+Log::info('message');
+Log::warning('message');
+Log::error('message');
+```
+
+##  Helper Functions
+```php
+<img src="{{url('/img/banner.jpg')}}" alt="banner"/>
 ```
