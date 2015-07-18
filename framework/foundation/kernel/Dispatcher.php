@@ -23,7 +23,7 @@ class Dispatcher
         require APP_DIR . 'routes.php';
 
         $postParameters = $request->postParameters();
-        if(sizeof($postParameters) <= 0) {
+        if (sizeof($postParameters) <= 0) {
             //GET
             $request->setType(Request::TYPE_GET);
             $getRules = Route::getRules();
@@ -43,12 +43,12 @@ class Dispatcher
     private function matchAndExec(Request $request, $uri, $rules)
     {
         $firstMatched = $this->matchFirstUriRule($uri, $rules);
-        if(isset($firstMatched)) {
+        if (isset($firstMatched)) {
             $temp = explode('@', $firstMatched['rule']);
             $urlParameter = $firstMatched['parameter'];
 
-            foreach($urlParameter as $key => $value) {
-                if($request->getType() == Request::TYPE_GET) {
+            foreach ($urlParameter as $key => $value) {
+                if ($request->getType() == Request::TYPE_GET) {
                     $request->setGetParameter($key, $value);
                 } else {
                     $request->setPostParameter($key, $value);
@@ -70,26 +70,26 @@ class Dispatcher
         $uriParts = explode('/', $uri);
         $parameter = array();
         //get rules
-        foreach($rules as $key => $value) {
+        foreach ($rules as $key => $value) {
             $isMatched = true;
             $keyParts = explode('/', $key);
             //remove null before first slash
-            array_splice($keyParts, 0 , 1);
+            array_splice($keyParts, 0, 1);
 
-            if(sizeof($uriParts) != sizeof($keyParts)) {
+            if (sizeof($uriParts) != sizeof($keyParts)) {
                 continue;
             }
 
             //match strings between slash
-            for($i = 0 ; $i < sizeof($keyParts); $i++) {
+            for ($i = 0; $i < sizeof($keyParts); $i++) {
                 $matches = $this->getStringBetweenCurlyBrackets($keyParts[$i]);
-                if(sizeof($matches) == 1) {
+                if (sizeof($matches) == 1) {
                     $variableName = $matches[0];
                     //store parameter key => value for controller action parameter
                     $parameter[$variableName] = $uriParts[$i];
                 } else {
                     //if not the curly bracket, strings between slashes needs to be the same;
-                    if(strcmp($keyParts[$i], $uriParts[$i]) === 0) {
+                    if (strcmp($keyParts[$i], $uriParts[$i]) === 0) {
                         continue;
                     } else {
                         $isMatched = false;
@@ -97,7 +97,7 @@ class Dispatcher
                 }
             }
 
-            if($isMatched == true) {
+            if ($isMatched == true) {
                 return array(
                     'rule' => $value,
                     'parameter' => $parameter

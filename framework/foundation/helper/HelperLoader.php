@@ -9,8 +9,9 @@
 namespace Helper;
 
 
-class HelperLoader {
-    public function __construct ()
+class HelperLoader
+{
+    public function __construct()
     {
         $this->loadViewFunctions();
     }

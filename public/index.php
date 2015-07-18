@@ -20,7 +20,7 @@ $request->setBaseUrl($_SERVER['HTTP_HOST']);
 $request->createRequest();
 $response = $dispatcher->dispatch($request);
 
-if($response instanceof Response) {
+if ($response instanceof Response) {
     $response->sendHeader();
     $response->sendContent();
 }

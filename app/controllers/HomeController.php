@@ -10,7 +10,8 @@ namespace Controllers;
 
 use Foundation\Component\Request;
 
-class HomeController extends Controller {
+class HomeController extends Controller
+{
 
     public function index(Request $request)
     {

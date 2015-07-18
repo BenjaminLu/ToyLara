@@ -5,8 +5,8 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="message">
-        404, Not Found
-    </div>
+<div class="message">
+    404, Not Found
+</div>
 </body>
 </html>

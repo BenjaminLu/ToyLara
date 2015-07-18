@@ -21,11 +21,11 @@ class Request
 
     public function __construct()
     {
-        foreach($_POST as $key => $value) {
+        foreach ($_POST as $key => $value) {
             $this->postParametersArray[$key] = $value;
         }
 
-        foreach($_GET as $key => $value) {
+        foreach ($_GET as $key => $value) {
             $this->getParametersArray[$key] = $value;
         }
     }
@@ -90,8 +90,8 @@ class Request
 
         $uri = $_SERVER['REQUEST_URI'];
         $uri = trim(str_replace($this->baseUrl, '', $uri), '/');
-        $hasTraditionalURLParametersIndex = strpos( $uri, '?');
-        if($hasTraditionalURLParametersIndex) {
+        $hasTraditionalURLParametersIndex = strpos($uri, '?');
+        if ($hasTraditionalURLParametersIndex) {
             $uri = substr($uri, 0, $hasTraditionalURLParametersIndex);
         }
 

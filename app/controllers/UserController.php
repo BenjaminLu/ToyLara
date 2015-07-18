@@ -8,10 +8,10 @@
 
 namespace Controllers;
 
-
 use Foundation\Component\Request;
 
-class UserController extends Controller {
+class UserController extends Controller
+{
     public function index()
     {
         return view('user.home');
@@ -20,7 +20,7 @@ class UserController extends Controller {
     public function show(Request $request)
     {
         $params = $request->getParameters();
-        return view('user.home')->with('params' , $params);
+        return view('user.home')->with('params', $params);
     }
 
     public function store(Request $request)

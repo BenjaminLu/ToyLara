@@ -9,9 +9,11 @@
 namespace Kernel;
 
 
-class Route {
+class Route
+{
     private static $getRules = array();
     private static $postRules = array();
+
     public static function get($pattern, $controllerAndAction)
     {
         static::$getRules[$pattern] = $controllerAndAction;

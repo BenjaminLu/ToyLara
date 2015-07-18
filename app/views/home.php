@@ -5,9 +5,9 @@
     <title>Document</title>
 </head>
 <body>
-    <div class="message">
-        Hello, Home
-        {{$hi}} {{$cool}}
-    </div>
+<div class="message">
+    Hello, Home
+    {{$hi}} {{$cool}}
+</div>
 </body>
 </html>

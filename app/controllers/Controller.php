@@ -9,9 +9,9 @@
 namespace Controllers;
 
 
-use Helper\HelperLoader;
-
-class Controller {
-    public function __construct () {
+class Controller
+{
+    public function __construct()
+    {
     }
 }

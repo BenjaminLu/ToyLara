@@ -21,7 +21,7 @@ function view($viewFile)
     $replacement = array("<?php echo ", ";?>");
 
     $compiledView = str_replace($pattern, $replacement, $unprocessedView);
-    $cacheFile = APP_DIR . 'cache/views/'. md5(time()) . '.php';
+    $cacheFile = APP_DIR . 'cache/views/' . md5(time()) . '.php';
     //make cache view
     file_put_contents($cacheFile, $compiledView);
 
