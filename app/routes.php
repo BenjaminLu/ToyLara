@@ -10,5 +10,7 @@ use Kernel\Route;
 Route::get('/', 'HomeController@index');
 Route::get('/show/xml', 'HomeController@showXml');
 Route::get('/show/json', 'HomeController@showJson');
+
+Route::get('/user', 'UserController@index');
 Route::get('/user/{id}', 'UserController@show');
 Route::post('/user/{id}', 'UserController@store');

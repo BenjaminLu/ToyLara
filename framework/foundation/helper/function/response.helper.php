@@ -38,7 +38,12 @@ function view($viewFile)
 
 function abort($code)
 {
-    require VIEW_DIR . 'error/' . $code . '.php';
+    $response = new Response();
+    $response->addHeader('Content-Type: text/html; charset=utf-8');
+    $response->setStatusCode(200);
+    $errorPagePath = VIEW_DIR . 'error/' . $code . '.php';
+    $response->setContent($errorPagePath);
+    return $response;
 }
 
 function redirect($url)

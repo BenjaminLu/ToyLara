@@ -71,41 +71,39 @@ class Dispatcher
         $parameter = array();
         //get rules
         foreach ($rules as $key => $value) {
-            $isMatched = true;
             $keyParts = explode('/', $key);
             //remove null before first slash
             array_splice($keyParts, 0, 1);
 
-            if (sizeof($uriParts) != sizeof($keyParts)) {
+            if (count($uriParts) != count($keyParts)) {
                 continue;
             }
-
             //match strings between slash
-            for ($i = 0; $i < sizeof($keyParts); $i++) {
+            $length = count($keyParts);
+            $lastIndex = ($length - 1);
+            for ($i = 0; $i < $length; $i++) {
                 $matches = $this->getStringBetweenCurlyBrackets($keyParts[$i]);
-                if (sizeof($matches) == 1) {
+                if (count($matches)) {
                     $variableName = $matches[0];
                     //store parameter key => value for controller action parameter
                     $parameter[$variableName] = $uriParts[$i];
                 } else {
                     //if not the curly bracket, strings between slashes needs to be the same;
-                    if (strcmp($keyParts[$i], $uriParts[$i]) === 0) {
-                        continue;
-                    } else {
-                        $isMatched = false;
+                    if (strcmp($keyParts[$i], $uriParts[$i]) !== 0) {
+                        break;
                     }
                 }
-            }
 
-            if ($isMatched == true) {
-                return array(
-                    'rule' => $value,
-                    'parameter' => $parameter
-                );
-            } else {
-                return null;
+                if ($i == $lastIndex) {
+                    //match routes rule
+                    return array(
+                        'rule' => $value,
+                        'parameter' => $parameter
+                    );
+                }
             }
         }
+        return null;
     }
 
     function getStringBetweenCurlyBrackets($string)

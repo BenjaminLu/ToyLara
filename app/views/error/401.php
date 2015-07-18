@@ -6,7 +6,7 @@
 </head>
 <body>
 <div class="message">
-    Hello! {{$name}}, welcome home.
+    401, Authorization Required
 </div>
 </body>
 </html>

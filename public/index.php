@@ -2,7 +2,6 @@
 require '../vendor/autoload.php';
 
 use Foundation\Component\Request;
-use Foundation\Component\Response;
 use Kernel\Dispatcher;
 
 /**
@@ -19,8 +18,5 @@ $dispatcher = new Dispatcher();
 $request->setBaseUrl($_SERVER['HTTP_HOST']);
 $request->createRequest();
 $response = $dispatcher->dispatch($request);
-
-if ($response instanceof Response) {
-    $response->sendHeader();
-    $response->sendContent();
-}
+$response->sendHeader();
+$response->sendContent();

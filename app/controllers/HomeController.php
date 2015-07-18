@@ -8,8 +8,6 @@
 
 namespace Controllers;
 
-use Foundation\Component\Request;
-
 class HomeController extends Controller
 {
     public function index()
@@ -17,7 +15,7 @@ class HomeController extends Controller
         return view('home')->with('name', 'Ben');
     }
 
-    public function showXml(Request $request)
+    public function showXml()
     {
         $array = [
             'Good guy' => [
