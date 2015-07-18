@@ -1,0 +1,8 @@
+{
+  "autoload": {
+    "classmap": [
+      "framework",
+      "app/controllers"
+    ]
+  }
+}
