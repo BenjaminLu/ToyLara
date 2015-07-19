@@ -8,13 +8,14 @@
 
 namespace Controllers;
 
-use Foundation\Component\Request;
+use Request;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return abort(401);
+       1/0;
+        return abort(402);
     }
 
     public function show(Request $request)

@@ -6,9 +6,10 @@
  * Time: 上午 11:03
  */
 
-use Helper\HelperLoader;
+use App\AppLoader;
 
 define('APP_DIR', dirname(__DIR__) . '/app/');
 define('VIEW_DIR', APP_DIR . 'views/');
+define('DEBUG_MODE', true);
 
-new HelperLoader();
+new AppLoader();

@@ -6,9 +6,6 @@
  * Time: 下午 08:48
  */
 
-namespace Foundation\Component;
-
-
 class Request
 {
     const TYPE_GET = 0;

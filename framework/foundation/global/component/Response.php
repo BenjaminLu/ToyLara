@@ -6,14 +6,14 @@
  * Time: 上午 11:11
  */
 
-namespace Foundation\Component;
-
 use Spatie\ArrayToXml\ArrayToXml;
 
 class Response
 {
     protected $headers = array();
     protected $content = null;
+    protected $exceptions = array();
+    protected $errors = array();
     protected $viewParameter = array();
     protected $statusCode = 404;
     protected $isHtml = true;
@@ -78,11 +78,50 @@ class Response
 
         if ($this->content) {
             if ($this->isHtml) {
-                require $this->content;
+                if(file_exists($this->content)) {
+                    require $this->content;
+                } else {
+                    $this->exceptions[] = new Exception('File : ' . $this->content . ' not found.');
+                }
             } else {
                 echo $this->content;
             }
         }
+
+        $hasError = (count($this->errors) > 0) ? true : false;
+        $hasException = (count($this->exceptions) > 0) ? true : false;
+
+        if(DEBUG_MODE) {
+            if($hasError) {
+                echo '<b>ERRORS : </b><br/>';
+                foreach($this->errors as $error) {
+                    echo $error['errno'] . ' ' .$error['errstr'] .', ';
+                    echo '  Fatal error on line ' . $error['errline'] . ' in file '. $error['errfile'];
+                    echo ', PHP ' . PHP_VERSION . ' (' . PHP_OS . ')<br/>';
+                }
+            }
+
+            if($hasException) {
+                echo '<b>EXCEPTIONS : </b><br/>';
+                foreach($this->exceptions as $exception) {
+                    echo $exception->getMessage() . '<br/>';
+                }
+            }
+        } else {
+            if($hasError or $hasException) {
+                echo 'There is something wrong.';
+            }
+        }
+    }
+
+    public function addError($error)
+    {
+        $this->errors[] = $error;
+    }
+
+    public function addException($exception)
+    {
+        $this->exceptions[] = $exception;
     }
 
     public function with($key, $value)

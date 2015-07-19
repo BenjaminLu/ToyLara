@@ -8,9 +8,10 @@
 
 namespace Kernel;
 
-
-use Foundation\Component\Request;
-use Foundation\Component\Response;
+use ErrorHandler;
+use Request;
+use Response;
+use Route;
 
 class Dispatcher
 {
@@ -19,7 +20,7 @@ class Dispatcher
         $parameter = null;
         $controllerName = null;
         $action = null;
-        $response = new Response();
+        //read user routing
         require APP_DIR . 'routes.php';
 
         $postParameters = $request->postParameters();
@@ -57,8 +58,12 @@ class Dispatcher
             $controllerName = '\Controllers\\' . $temp[0];
             $action = $temp[1];
             if (class_exists($controllerName)) {
+                //install independent error handler to each request scope
+                $errorHandler = new ErrorHandler();
+                set_error_handler(array($errorHandler, 'handleError'));
                 $controller = new $controllerName;
                 $response = $controller->$action($request);
+                $errorHandler->attachErrorToResponse($response);
                 return $response;
             }
         }

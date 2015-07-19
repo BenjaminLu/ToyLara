@@ -2,13 +2,9 @@
 /**
  * Created by PhpStorm.
  * User: Administrator
- * Date: 2015/7/17
- * Time: 下午 11:31
+ * Date: 2015/7/19
+ * Time: 下午 11:25
  */
-
-namespace Kernel;
-
-
 class Route
 {
     private static $getRules = array();

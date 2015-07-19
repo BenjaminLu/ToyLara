@@ -1,5 +1,4 @@
 <?php
-use Foundation\Component\Response;
 
 /**
  * Created by PhpStorm.
@@ -11,28 +10,20 @@ use Foundation\Component\Response;
 function view($viewFile)
 {
     $response = new Response();
-    try {
-        $viewPath = str_replace('.', '/', $viewFile);
-        //exec php code in view;
+    $viewPath = str_replace('.', '/', $viewFile);
+    $unprocessedView = file_get_contents(VIEW_DIR . $viewPath . '.php');
+    //replace {{$i}} to php echo function
+    $pattern = array("{{", "}}");
+    $replacement = array("<?php echo htmlentities(", ");?>");
 
-        $unprocessedView = file_get_contents(VIEW_DIR . $viewPath . '.php');
-        //replace {{$i}} to php echo function
+    $compiledView = str_replace($pattern, $replacement, $unprocessedView);
+    $cacheFile = APP_DIR . 'cache/views/' . md5(time()) . '.php';
+    //make cache view
+    file_put_contents($cacheFile, $compiledView);
 
-        $pattern = array("{{", "}}");
-        $replacement = array("<?php echo ", ";?>");
-
-        $compiledView = str_replace($pattern, $replacement, $unprocessedView);
-        $cacheFile = APP_DIR . 'cache/views/' . md5(time()) . '.php';
-        //make cache view
-        file_put_contents($cacheFile, $compiledView);
-
-        $response->addHeader('Content-Type: text/html; charset=utf-8');
-        $response->setContent($cacheFile);
-        $response->setStatusCode(200);
-    } catch (Exception $e) {
-        $response->setStatusCode(501);
-    }
-
+    $response->addHeader('Content-Type: text/html; charset=utf-8');
+    $response->setContent($cacheFile);
+    $response->setStatusCode(200);
     return $response;
 }
 

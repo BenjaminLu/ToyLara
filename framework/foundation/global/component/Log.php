@@ -6,8 +6,6 @@
  * Time: 下午 09:35
  */
 
-namespace Foundation\Component;
-
 class Log
 {
     public static function info($message)
