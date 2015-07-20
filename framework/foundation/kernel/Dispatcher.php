@@ -10,7 +10,6 @@ namespace Kernel;
 
 use ErrorHandler;
 use Request;
-use Response;
 use Route;
 
 class Dispatcher

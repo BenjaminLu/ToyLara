@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2015/7/17
  * Time: 下午 08:48
  */
-
 class Request
 {
     const TYPE_GET = 0;

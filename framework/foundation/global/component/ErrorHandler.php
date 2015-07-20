@@ -1,17 +1,18 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2015/7/19
  * Time: 下午 11:58
  */
-
-class ErrorHandler {
+class ErrorHandler
+{
     private $errors = array();
 
     public function attachErrorToResponse(Response $response)
     {
-        foreach($this->errors as $error) {
+        foreach ($this->errors as $error) {
             $response->addError($error);
         }
     }
@@ -51,7 +52,7 @@ class ErrorHandler {
             'errno' => $errno,
             'errstr' => $errstr,
             'errfile' => $errfile,
-            'errline' =>$errline
+            'errline' => $errline
         ));
 
         /* Don't execute PHP internal error handler */

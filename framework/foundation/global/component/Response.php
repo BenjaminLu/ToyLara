@@ -78,7 +78,7 @@ class Response
 
         if ($this->content) {
             if ($this->isHtml) {
-                if(file_exists($this->content)) {
+                if (file_exists($this->content)) {
                     require $this->content;
                 } else {
                     $this->exceptions[] = new Exception('File : ' . $this->content . ' not found.');
@@ -91,24 +91,24 @@ class Response
         $hasError = (count($this->errors) > 0) ? true : false;
         $hasException = (count($this->exceptions) > 0) ? true : false;
 
-        if(DEBUG_MODE) {
-            if($hasError) {
+        if (DEBUG_MODE) {
+            if ($hasError) {
                 echo '<b>ERRORS : </b><br/>';
-                foreach($this->errors as $error) {
-                    echo $error['errno'] . ' ' .$error['errstr'] .', ';
-                    echo '  Fatal error on line ' . $error['errline'] . ' in file '. $error['errfile'];
+                foreach ($this->errors as $error) {
+                    echo $error['errno'] . ' ' . $error['errstr'] . ', ';
+                    echo '  Fatal error on line ' . $error['errline'] . ' in file ' . $error['errfile'];
                     echo ', PHP ' . PHP_VERSION . ' (' . PHP_OS . ')<br/>';
                 }
             }
 
-            if($hasException) {
+            if ($hasException) {
                 echo '<b>EXCEPTIONS : </b><br/>';
-                foreach($this->exceptions as $exception) {
+                foreach ($this->exceptions as $exception) {
                     echo $exception->getMessage() . '<br/>';
                 }
             }
         } else {
-            if($hasError or $hasException) {
+            if ($hasError or $hasException) {
                 echo 'There is something wrong.';
             }
         }

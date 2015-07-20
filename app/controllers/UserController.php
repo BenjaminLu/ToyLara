@@ -14,7 +14,7 @@ class UserController extends Controller
 {
     public function index()
     {
-       1/0;
+        1 / 0;
         return abort(402);
     }
 

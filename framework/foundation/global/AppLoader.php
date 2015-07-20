@@ -13,15 +13,20 @@ class AppLoader
 {
     public function __construct()
     {
+        $this->loadDatabaseConnections();
         $this->loadComponents();
         $this->loadRoutes();
         $this->loadViewHelpers();
     }
 
+    public function loadDatabaseConnections()
+    {
+        require 'database/Database.php';
+    }
+
     public function loadComponents()
     {
         require 'component/ErrorHandler.php';
-        require 'component/ExceptionHandler.php';
         require 'component/Log.php';
         require 'component/Request.php';
         require 'component/Response.php';

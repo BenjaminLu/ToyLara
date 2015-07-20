@@ -8,8 +8,36 @@
 
 use App\AppLoader;
 
+new AppLoader();
 define('APP_DIR', dirname(__DIR__) . '/app/');
 define('VIEW_DIR', APP_DIR . 'views/');
 define('DEBUG_MODE', true);
 
-new AppLoader();
+//DB
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'test');
+define('DB_USER', 'test');
+define('DB_PASSWORD', 'test');
+define('DB_ENCODING', 'utf8');
+define('DSN', 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME);
+$dsn = DSN;
+$options = array(
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_PERSISTENT => true
+);
+
+if (version_compare(PHP_VERSION, '5.3.6', '<')) {
+    if (defined('PDO::MYSQL_ATTR_INIT_COMMAND')) {
+        $options[PDO::MYSQL_ATTR_INIT_COMMAND] = 'SET NAMES ' . DB_ENCODING;
+    }
+} else {
+    $dsn .= ';charset=' . DB_ENCODING;
+}
+$pdo = new \PDO($dsn, DB_USER, DB_PASSWORD, $options);
+
+if (version_compare(PHP_VERSION, '5.3.6', '<') && !defined('PDO::MYSQL_ATTR_INIT_COMMAND')) {
+    $sql = 'SET NAMES ' . DB_ENCODING;
+    $pdo->exec($sql);
+}
+
+DB::setPDO($pdo);

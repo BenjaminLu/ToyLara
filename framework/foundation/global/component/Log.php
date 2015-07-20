@@ -1,11 +1,11 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: Administrator
  * Date: 2015/7/18
  * Time: 下午 09:35
  */
-
 class Log
 {
     public static function info($message)
