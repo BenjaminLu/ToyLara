@@ -8,8 +8,6 @@
 
 namespace Controllers;
 
-use DB;
-
 class HomeController extends Controller
 {
     public function index()

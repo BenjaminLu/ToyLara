@@ -14,6 +14,7 @@ use Philo\Blade\Blade;
 class AppLoader
 {
     private static $blade;
+
     public static function initialize()
     {
         static::$blade = new Blade(VIEW_DIR, CACHE_DIR);

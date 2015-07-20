@@ -78,7 +78,7 @@ class Response
                     try {
                         echo $this->bladeView->make($this->content, $this->viewParameter)->render();
                         $this->setStatusCode(200);
-                    } catch(Exception $e) {
+                    } catch (Exception $e) {
                         $this->setStatusCode(500);
                     }
 
@@ -111,7 +111,7 @@ class Response
                 }
             }
 
-            if(!$hasError and !$hasException) {
+            if (!$hasError and !$hasException) {
                 $this->setStatusCode(200);
             }
         } else {
@@ -144,7 +144,7 @@ class Response
             $this->content = json_encode($array);
             $this->setIsHtml(false);
             $this->setStatusCode(200);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $this->setStatusCode(500);
         }
         return $this;
@@ -158,7 +158,7 @@ class Response
             $this->content = $xml;
             $this->setIsHtml(false);
             $this->setStatusCode(200);
-        } catch(Exception $e) {
+        } catch (Exception $e) {
             $this->setStatusCode(500);
         }
         return $this;

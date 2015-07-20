@@ -43,6 +43,9 @@ class UserController extends Controller
 }
 ```
 
+## Blade Integration
+Support all blade features as described in the [Laravel 5 documentation](http://laravel.com/docs/5.1#blade-templating)
+
 ## Show Variables in Views
 ```php
 <!doctype html>
@@ -53,10 +56,10 @@ class UserController extends Controller
 </head>
 <body>
 <ul>
-    <?php foreach ($params as $key => $value) { ?>
-        <li>{{$key}}</li>
-        <li>{{$value}}</li>
-    <?php } ?>
+    @foreach ($params as $key => $value)
+       <li>{{$key}}</li>
+       <li>{{$value}}</li>
+    @endforeach
 </ul>
 </body>
 </html>
@@ -171,7 +174,3 @@ if(!is_null($result)) {
     }
 }
 ```
-
-
-## Blade Integration
-Support all blade features as described in the [Laravel 5 documentation](http://laravel.com/docs/5.1#blade-templating)

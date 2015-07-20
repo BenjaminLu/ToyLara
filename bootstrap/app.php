@@ -7,10 +7,10 @@
  */
 
 use App\AppLoader;
-use Philo\Blade\Blade;
+
 define('APP_DIR', dirname(__DIR__) . '/app/');
 define('VIEW_DIR', APP_DIR . 'views/');
-define('CACHE_DIR', APP_DIR.'cache/views/');
+define('CACHE_DIR', APP_DIR . 'cache/views/');
 define('DEBUG_MODE', true);
 
 //DB
