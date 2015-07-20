@@ -6,6 +6,7 @@
  * Time: 上午 11:11
  */
 
+use App\AppLoader;
 use Spatie\ArrayToXml\ArrayToXml;
 
 class Response
@@ -17,6 +18,7 @@ class Response
     protected $viewParameter = array();
     protected $statusCode = 404;
     protected $isHtml = true;
+    protected $bladeView;
 
     public function setIsHtml($boolean)
     {
@@ -62,24 +64,24 @@ class Response
         }
     }
 
-    public function setContent($content)
+    public function setContent($viewFile)
     {
-        $this->content = $content;
+        $this->bladeView = AppLoader::blade()->view();
+        $this->content = $viewFile;
     }
 
     public function sendContent()
     {
-        if (sizeof($this->viewParameter) > 0) {
-            foreach ($this->viewParameter as $key => $value) {
-                global $$key;
-                $$key = $value;
-            }
-        }
-
         if ($this->content) {
             if ($this->isHtml) {
-                if (file_exists($this->content)) {
-                    require $this->content;
+                if (($this->content)) {
+                    try {
+                        echo $this->bladeView->make($this->content, $this->viewParameter)->render();
+                        $this->setStatusCode(200);
+                    } catch(Exception $e) {
+                        $this->setStatusCode(500);
+                    }
+
                 } else {
                     $this->exceptions[] = new Exception('File : ' . $this->content . ' not found.');
                 }
@@ -93,6 +95,7 @@ class Response
 
         if (DEBUG_MODE) {
             if ($hasError) {
+                $this->setStatusCode(500);
                 echo '<b>ERRORS : </b><br/>';
                 foreach ($this->errors as $error) {
                     echo $error['errno'] . ' ' . $error['errstr'] . ', ';
@@ -106,6 +109,10 @@ class Response
                 foreach ($this->exceptions as $exception) {
                     echo $exception->getMessage() . '<br/>';
                 }
+            }
+
+            if(!$hasError and !$hasException) {
+                $this->setStatusCode(200);
             }
         } else {
             if ($hasError or $hasException) {
@@ -132,16 +139,28 @@ class Response
 
     public function json($array)
     {
-        $this->addHeader('Content-Type: application/json; charset=utf-8');
-        $this->content = json_encode($array);
+        try {
+            $this->addHeader('Content-Type: application/json; charset=utf-8');
+            $this->content = json_encode($array);
+            $this->setIsHtml(false);
+            $this->setStatusCode(200);
+        } catch(Exception $e) {
+            $this->setStatusCode(500);
+        }
         return $this;
     }
 
     public function xml($array)
     {
-        $this->addHeader('Content-Type: application/xml; charset=utf-8');
-        $xml = ArrayToXml::convert($array, 'root');
-        $this->content = $xml;
+        try {
+            $this->addHeader('Content-Type: application/xml; charset=utf-8');
+            $xml = ArrayToXml::convert($array, 'root');
+            $this->content = $xml;
+            $this->setIsHtml(false);
+            $this->setStatusCode(200);
+        } catch(Exception $e) {
+            $this->setStatusCode(500);
+        }
         return $this;
     }
 }

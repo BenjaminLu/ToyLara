@@ -6,6 +6,7 @@
     ]
   },
   "require": {
-    "spatie/array-to-xml": "^1.0"
+    "spatie/array-to-xml": "^1.0",
+    "philo/laravel-blade": "3.*"
   }
 }

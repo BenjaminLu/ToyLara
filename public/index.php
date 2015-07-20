@@ -16,5 +16,5 @@ $request = new Request();
 $request->setBaseUrl($_SERVER['HTTP_HOST']);
 $request->createRequest();
 $response = Dispatcher::dispatch($request);
-$response->sendHeader();
 $response->sendContent();
+$response->sendHeader();

@@ -9,14 +9,23 @@
 namespace App;
 
 
+use Philo\Blade\Blade;
+
 class AppLoader
 {
+    private static $blade;
     public static function initialize()
     {
+        static::$blade = new Blade(VIEW_DIR, CACHE_DIR);
         static::loadDatabaseConnections();
         static::loadComponents();
         static::loadRoutes();
         static::loadViewHelpers();
+    }
+
+    public static function blade()
+    {
+        return static::$blade;
     }
 
     public static function loadDatabaseConnections()

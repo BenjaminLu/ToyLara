@@ -14,8 +14,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        1 / 0;
-        return abort(402);
+        return view('user.home');
     }
 
     public function show(Request $request)

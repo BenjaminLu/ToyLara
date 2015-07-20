@@ -7,17 +7,17 @@
  */
 
 use App\AppLoader;
-
-AppLoader::initialize();
+use Philo\Blade\Blade;
 define('APP_DIR', dirname(__DIR__) . '/app/');
 define('VIEW_DIR', APP_DIR . 'views/');
+define('CACHE_DIR', APP_DIR.'cache/views/');
 define('DEBUG_MODE', true);
 
 //DB
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'test');
-define('DB_USER', 'test');
-define('DB_PASSWORD', 'test');
+define('DB_NAME', 'pdo');
+define('DB_USER', 'root');
+define('DB_PASSWORD', 'howard123');
 define('DB_ENCODING', 'utf8');
 define('DSN', 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME);
 $dsn = DSN;
@@ -40,4 +40,5 @@ if (version_compare(PHP_VERSION, '5.3.6', '<') && !defined('PDO::MYSQL_ATTR_INIT
     $pdo->exec($sql);
 }
 
+AppLoader::initialize();
 DB::setPDO($pdo);

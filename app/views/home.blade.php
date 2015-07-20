@@ -6,7 +6,8 @@
 </head>
 <body>
 <div class="message">
-    Hello! {{$name}}, welcome home.
+    <h1>Title2</h1>
+    @yield('container')
 </div>
 </body>
 </html>
