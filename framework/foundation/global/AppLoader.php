@@ -11,20 +11,20 @@ namespace App;
 
 class AppLoader
 {
-    public function __construct()
+    public static function initialize()
     {
-        $this->loadDatabaseConnections();
-        $this->loadComponents();
-        $this->loadRoutes();
-        $this->loadViewHelpers();
+        static::loadDatabaseConnections();
+        static::loadComponents();
+        static::loadRoutes();
+        static::loadViewHelpers();
     }
 
-    public function loadDatabaseConnections()
+    public static function loadDatabaseConnections()
     {
         require 'database/Database.php';
     }
 
-    public function loadComponents()
+    public static function loadComponents()
     {
         require 'component/ErrorHandler.php';
         require 'component/Log.php';
@@ -32,12 +32,12 @@ class AppLoader
         require 'component/Response.php';
     }
 
-    public function loadRoutes()
+    public static function loadRoutes()
     {
         require 'route/route.php';
     }
 
-    public function loadViewHelpers()
+    public static function loadViewHelpers()
     {
         require 'helper/response.helper.php';
     }

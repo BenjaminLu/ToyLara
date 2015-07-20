@@ -8,7 +8,7 @@
 
 use App\AppLoader;
 
-new AppLoader();
+AppLoader::initialize();
 define('APP_DIR', dirname(__DIR__) . '/app/');
 define('VIEW_DIR', APP_DIR . 'views/');
 define('DEBUG_MODE', true);

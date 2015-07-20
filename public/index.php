@@ -13,9 +13,8 @@ use Kernel\Dispatcher;
 //Load global helper function
 require dirname(__DIR__) . '/bootstrap/app.php';
 $request = new Request();
-$dispatcher = new Dispatcher();
 $request->setBaseUrl($_SERVER['HTTP_HOST']);
 $request->createRequest();
-$response = $dispatcher->dispatch($request);
+$response = Dispatcher::dispatch($request);
 $response->sendHeader();
 $response->sendContent();

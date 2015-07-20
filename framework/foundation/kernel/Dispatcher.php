@@ -14,7 +14,7 @@ use Route;
 
 class Dispatcher
 {
-    public function dispatch(Request $request)
+    public static function dispatch(Request $request)
     {
         $parameter = null;
         $controllerName = null;
@@ -28,21 +28,21 @@ class Dispatcher
             $request->setType(Request::TYPE_GET);
             $getRules = Route::getRules();
             $uri = $request->getUri();
-            $response = $this->matchAndExec($request, $uri, $getRules);
+            $response = static::matchAndExec($request, $uri, $getRules);
             return $response;
         } else {
             //POST
             $request->setType(Request::TYPE_POST);
             $postRules = Route::postRules();
             $uri = $request->getUri();
-            $response = $this->matchAndExec($request, $uri, $postRules);
+            $response = static::matchAndExec($request, $uri, $postRules);
             return $response;
         }
     }
 
-    private function matchAndExec(Request $request, $uri, $rules)
+    private static function matchAndExec(Request $request, $uri, $rules)
     {
-        $firstMatched = $this->matchFirstUriRule($uri, $rules);
+        $firstMatched = static::matchFirstUriRule($uri, $rules);
         if (isset($firstMatched)) {
             $temp = explode('@', $firstMatched['rule']);
             $urlParameter = $firstMatched['parameter'];
@@ -69,7 +69,7 @@ class Dispatcher
         return abort(404);
     }
 
-    private function matchFirstUriRule($uri, $rules)
+    private static function matchFirstUriRule($uri, $rules)
     {
         $uriParts = explode('/', $uri);
         $parameter = array();
@@ -86,7 +86,7 @@ class Dispatcher
             $length = count($keyParts);
             $lastIndex = ($length - 1);
             for ($i = 0; $i < $length; $i++) {
-                $matches = $this->getStringBetweenCurlyBrackets($keyParts[$i]);
+                $matches = static::getStringBetweenCurlyBrackets($keyParts[$i]);
                 if (count($matches)) {
                     $variableName = $matches[0];
                     //store parameter key => value for controller action parameter
@@ -110,7 +110,7 @@ class Dispatcher
         return null;
     }
 
-    function getStringBetweenCurlyBrackets($string)
+    private static function getStringBetweenCurlyBrackets($string)
     {
         preg_match_all('/{(.*?)}/', $string, $matches);
         return $matches[1];
