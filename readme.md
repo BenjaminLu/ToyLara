@@ -171,3 +171,7 @@ if(!is_null($result)) {
     }
 }
 ```
+
+
+## Blade Integration
+Support all blade features as described in the [Laravel 5 documentation](http://laravel.com/docs/5.1#blade-templating)
