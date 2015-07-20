@@ -115,3 +115,59 @@ class HomeController extends Controller
     }
 }
 ```
+
+## Database Operations
+DB class is the wrapper of PDO class.
+modify your setting in bootstrap/app.php and start to communicate with default MySQL database.
+Select
+```php
+$result = DB::select('select * from users');
+foreach($result as $row) {
+    echo $row['email'];
+}
+$result = DB::select('select * from users where id = ?', array(1));
+echo $result['id'];
+```
+
+Insert
+```php
+$affected = DB::insert('insert into users (name, email) values (?, ?)', array('Ben', 'abc@example.com'));
+```
+
+Update
+```php
+$affected = DB::update('update users set email = ? where id = ?', array('abc@example.com', 1));
+```
+
+Delete
+```php
+$affected = DB::delete('delete from users where id = ?', array(1));
+```
+Transaction
+these statements will automatically rollback if any error happened in the anonymous function.
+```php
+DB::transaction(function(){
+   DB::insert('insert into users (name, email) values (?, ?)', array('Ben', 'abc@example.com');
+   DB::delete('delete from users where id = ?', array(1));
+   DB::update('update users set email = ? where id = ?', array('abcd@example.com', 1));
+});
+```
+
+or you can manually perform a database transaction for receiving some variables outside the transaction code.
+```php
+$result = null;
+try {
+    DB::beginTransaction();
+    $result = DB::select('select * from users');
+    DB::delete('delete from users where id = ?', array(1));
+    DB::commit();
+} catch(Exception $e) {
+    DB::rollBack();
+}
+
+if(!is_null($result)) {
+    foreach($result as $row) {
+        echo $row['email'];
+    }
+}
+```
