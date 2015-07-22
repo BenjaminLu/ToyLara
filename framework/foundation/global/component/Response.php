@@ -7,7 +7,6 @@
  */
 
 use App\AppLoader;
-use Spatie\ArrayToXml\ArrayToXml;
 
 class Response
 {
@@ -154,13 +153,40 @@ class Response
     {
         try {
             $this->addHeader('Content-Type: application/xml; charset=utf-8');
-            $xml = ArrayToXml::convert($array, 'root');
-            $this->content = $xml;
+            $this->content = $this->toXml($array, 'root');
             $this->setIsHtml(false);
             $this->setStatusCode(200);
         } catch (Exception $e) {
             $this->setStatusCode(500);
         }
         return $this;
+    }
+
+    public function toXml($data, $rootNodeName = 'data', $xml = null)
+    {
+        if (ini_get('zend.ze1_compatibility_mode') == 1) {
+            ini_set('zend.ze1_compatibility_mode', 0);
+        }
+
+        if ($xml == null) {
+            $xml = simplexml_load_string("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
+        }
+
+        foreach ($data as $key => $value) {
+            if (is_numeric($key)) {
+                $key = "unknownNode_" . (string)$key;
+            }
+            $key = preg_replace('/[^a-z]/i', '', $key);
+            if (is_array($value)) {
+                $node = $xml->addChild($key);
+                // recrusive call.
+                $this->toXml($value, $rootNodeName, $node);
+            } else {
+                $value = htmlentities($value);
+                $xml->addChild($key, $value);
+            }
+
+        }
+        return $xml->asXML();
     }
 }

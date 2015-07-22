@@ -19,7 +19,7 @@ class HomeController extends Controller
     {
         $array = [
             'Good guy' => [
-                'name' => 'Luke Skywalker',
+                'name' => '中文',
                 'weapon' => 'Lightsaber'
             ],
             'Bad guy' => [
@@ -34,7 +34,7 @@ class HomeController extends Controller
     {
         $data = array(
             'para1' => 'data1',
-            'para2' => 'data2',
+            'para2' => '中文',
             'para3' => 'data3',
             'para4' => 'data4',
             'para5' => array(
